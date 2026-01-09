@@ -16,6 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminUserSeeder::class,
+            MoodSeeder::class,
+            QuestionSeeder::class,
+            AnswerSeeder::class,
+            QuestionMoodSeeder::class,
+            CoffeeSeeder::class,
+            ActivitySeeder::class,
+            BookSeeder::class,
+            CoffeePalaceSeeder::class,
+            SuggestionSeeder::class,
         ]);
     }
 }

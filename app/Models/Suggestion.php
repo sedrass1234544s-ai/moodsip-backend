@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Suggestion extends Model
 {
@@ -57,5 +58,16 @@ class Suggestion extends Model
     public function userSuggestions(): HasMany
     {
         return $this->hasMany(UserSuggestion::class);
+    }
+
+    public function getIconAttribute(): ?string
+    {
+        $icon = $this->attributes['icon'] ?? null;
+
+        if (! $icon) {
+            return null;
+        }
+
+        return Storage::disk('public')->url($icon);
     }
 }

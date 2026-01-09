@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Resources\Api;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class CoffeeResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        $locale = app()->getLocale();
+        $nameField = $locale === 'ar' ? 'name_ar' : 'name_en';
+
+        return [
+            'id' => $this->id,
+            'name' => $this->$nameField,
+            'name_ar' => $this->name_ar,
+            'name_en' => $this->name_en,
+            'image' => $this->image,
+            'coffee_palaces' => CoffeePalaceResource::collection($this->whenLoaded('coffeePalaces')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
+}

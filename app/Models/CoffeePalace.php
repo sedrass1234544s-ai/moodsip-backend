@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class CoffeePalace extends Model
 {
@@ -24,5 +25,16 @@ class CoffeePalace extends Model
     public function coffee(): BelongsTo
     {
         return $this->belongsTo(Coffee::class);
+    }
+
+    public function getImageAttribute(): ?string
+    {
+        $image = $this->attributes['image'] ?? null;
+
+        if (! $image) {
+            return null;
+        }
+
+        return Storage::disk('public')->url($image);
     }
 }
